@@ -6,10 +6,15 @@
 </template>
 
 <script setup>
-// imports
+/* 
+  imports
+*/
 import { defineProps, defineEmits } from 'vue';
 
-// props
+/*
+   props
+*/
+
 const props = defineProps({
   error: {
     required: true,
@@ -21,6 +26,8 @@ const props = defineProps({
   }
 })
 
-// emits
+/*
+  emits
+*/
 const emits = defineEmits(['update:modelValue'])
 </script>

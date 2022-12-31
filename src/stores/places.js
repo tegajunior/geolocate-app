@@ -46,4 +46,28 @@ export const usePlacesStore = defineStore({
       this.errorObj = payload
     }
   },
+  getters: {
+    getPagesCount: (state) => {
+      let arrayOfPlaces = state.places
+      switch (state.currentPage) {
+        case 1:
+          arrayOfPlaces = arrayOfPlaces.slice(0, 10)
+          break
+        case 2:
+          arrayOfPlaces = arrayOfPlaces.slice(10, 20)
+          break
+        case 3:
+          arrayOfPlaces = arrayOfPlaces.slice(20, 30)
+          break
+        case 4:
+          arrayOfPlaces = arrayOfPlaces.slice(30, 40)
+          break
+        case 5:
+          arrayOfPlaces = arrayOfPlaces.slice(40, 50)
+        default:
+          break
+      }
+      return arrayOfPlaces
+    }
+  }
 })

@@ -5,10 +5,10 @@
       <p class="panel-heading">
         Nearby Stores
       </p>
-      <StoreVue v-for="item in places" :key="item" :place="item" v-if="!isLoading" />
+      <StoreVue v-for="item in store.getPagesCount" :key="item" :place="item" v-if="!isLoading" />
       <progress class="progress is-small is-primary" max="100" v-if="isLoading">15%</progress>
     </nav>
-    <PaginationVue v-if="!isLoading && !internalError" @get-new-page="getNewPage" />
+    <PaginationVue v-if="!isLoading && !hidePagination" @get-new-page="getNewPage" />
     <NotificationVue v-if="errorObj.isError" :error="errorObj" v-model="errorObj.isError" />
   </div>
 
@@ -20,18 +20,18 @@
 */
 import { onMounted, ref, reactive } from 'vue'
 import axios from 'axios'
-import { storeToRefs } from 'pinia'
 import { usePlacesStore } from '../stores/places'
 
 import StoreVue from '../components/Store.vue'
 import NotificationVue from '../components/Notification.vue'
 import PaginationVue from '../components/Pagination.vue'
 
+const apiKey = 'NGndxGqMBy3xc3bCQhpHq7H5sVfwymGX'
+
 /*
   store
 */
 const store = usePlacesStore()
-const { places } = storeToRefs(store)
 
 /*
   non reactive data
@@ -56,24 +56,23 @@ const getLocations = async position => {
 
 const getNearbyPlaces = (page = store.currentPage) => {
   isLoading.value = true
-  axios.get(`https://geolocateplaces.onrender.com/api/places/${lat}/${lon}/${page}`)
-    .then(response => {
-      store.updatePlaces(response.data)
-      store.updateCurrentPage(page)
+  axios.get(`https://api.tomtom.com/search/2/nearbySearch/.json?limit=100&key=${apiKey}&lat=${lat}&lon=${lon}`).then(
+    response => {
+      store.updatePlaces(response.data.results)
       isLoading.value = false
-    })
-    .catch(error => {
-      errorObj.isError = true;
-      errorObj.errorText = 'An internal error occured and we couldn\'t locate nearby places'
-      errorObj.errorType = 2
-      isLoading.value = false
-      internalError.value = true
-    })
+      hidePagination.value = false
+    }
+  ).catch(error => {
+    errorObj.isError = true;
+    errorObj.errorText = `${error.message}`
+    errorObj.errorType = 2
+    isLoading.value = false
+  })
 }
 /*
   error handling
 */
-const internalError = ref(false)
+const hidePagination = ref(true)
 
 const isLoading = ref(false)
 const errorObj = reactive({
@@ -110,6 +109,6 @@ const getNewPage = (page) => {
   if (page === store.currentPage) {
     return
   }
-  getNearbyPlaces(page)
+  store.updateCurrentPage(page)
 }
 </script>

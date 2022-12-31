@@ -3,7 +3,7 @@
     <div class="modal-background"></div>
     <div class="modal-card" ref="modalCardRef">
       <header class="modal-card-head">
-        <p class="modal-card-title">{{ place.poi.name }}</p>
+        <p class="modal-card-title is-size-6-mobile">{{ place.poi.name }}</p>
         <button class="delete is-danger" aria-label="close" @click="closeModal"></button>
       </header>
       <section class="modal-card-body">

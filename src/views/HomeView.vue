@@ -32,7 +32,6 @@ import PaginationVue from '../components/Pagination.vue'
 */
 const store = usePlacesStore()
 const { places } = storeToRefs(store)
-const { currentPage } = storeToRefs(store)
 
 /*
   non reactive data
@@ -44,7 +43,7 @@ let lat, lon;
   geolocation
 */
 onMounted(() => {
-  if (navigator.geolocation) navigator.geolocation.getCurrentPosition(getLocations, handleErrors)
+  if (navigator.geolocation) navigator.geolocation.getCurrentPosition(getLocations, handleErrors, { enableHighAccuracy: true, maximumAge: 10000 })
 
 })
 const getLocations = async position => {

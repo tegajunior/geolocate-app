@@ -64,6 +64,22 @@ export const usePlacesStore = defineStore({
           break
         case 5:
           arrayOfPlaces = arrayOfPlaces.slice(40, 50)
+          break
+        case 6:
+          arrayOfPlaces = arrayOfPlaces.slice(50, 60)
+          break
+        case 7:
+          arrayOfPlaces = arrayOfPlaces.slice(60, 70)
+          break
+        case 8:
+          arrayOfPlaces = arrayOfPlaces.slice(70, 80)
+          break
+        case 9:
+          arrayOfPlaces = arrayOfPlaces.slice(80, 90)
+          break
+        case 10:
+          arrayOfPlaces = arrayOfPlaces.slice(90, 100)
+          break
         default:
           break
       }

@@ -52,6 +52,26 @@ const myPages = reactive(
         id: 5,
         isActive: false
       },
+      {
+        id: 6,
+        isActive: false
+      },
+      {
+        id: 7,
+        isActive: false
+      },
+      {
+        id: 8,
+        isActive: false
+      },
+      {
+        id: 9,
+        isActive: false
+      },
+      {
+        id: 10,
+        isActive: false
+      },
     ]
   }
 )
